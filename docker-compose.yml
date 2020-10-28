@@ -1,13 +1,28 @@
 version: '3'
 
 services:
-    go_server:
-        container_name: go_server
+
+    # apache2.4
+    web_server:
+        container_name: web_apache
         build:
             context: .
-            dockerfile: ./docker/go/Dockerfile
+            dockerfile: ./docker/apache/Dockerfile
         ports:
-            - 6060:8080
+            - 8001:80
+            - 444:443
         restart: always
         volumes: 
-            - ./src/go:/usr/src/app
+            - ./src/htdocs/:/usr/local/apache2/htdocs/
+            - ./docker/apache/conf/:/usr/local/apache2/conf/
+
+    # go_server:
+    #     container_name: go_server
+    #     build:
+    #         context: .
+    #         dockerfile: ./docker/go/Dockerfile
+    #     ports:
+    #         - 6060:8080
+    #     restart: always
+    #     volumes: 
+    #         - ./src/go:/usr/src/app
